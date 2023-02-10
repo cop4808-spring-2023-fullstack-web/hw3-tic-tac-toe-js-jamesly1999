@@ -31,7 +31,7 @@ function handlePlayerChange() {
     statusDisplay.innerHTML = currentPlayerTurn();
 }
 
-function handleResultValidation() {
+function checkWin(){
     let roundWon = false;
     for (let i = 0; i <= 7; i++) {
         const winCondition = winningConditions[i];
@@ -51,35 +51,50 @@ function handleResultValidation() {
         statusDisplay.innerHTML = winningMessage();
         gameActive = false;
         statusDisplay.style.color = "rgb(251,100,204)";
-        return;
+        return roundWon;
     }
-
+    
     let roundDraw = !gameState.includes("");
     if (roundDraw) {
         statusDisplay.innerHTML = drawMessage();
         gameActive = false;
         statusDisplay.style.color = "rgb(251,100,204)";
-        return;
+        return roundDraw;
     }
-
-    handlePlayerChange();
-    ComputerMove();
+   return false;
+  
 }
 
-function ComputerMove(){
-    PickMove()
+function handleResultValidation() {
+    checkWin()
+
+    if(gameActive){
+    handlePlayerChange();
+    handleComputerMove();
+}    
+
+}
+
+function handleComputerMove(){
+    pickComputerMove()
+    if(!checkWin())
+        handlePlayerChange()
     
 }
 
-function PickMove(){
+function pickComputerMove(){
     while(true){
         //loop through gameState and randomly find an available spot
         m = Math.floor(Math.random() *8)
         if(gameState[m]=='')//looking for empty spot
             break;
     }
+     //m will have the computer move
+    gameState[m]=currentPlayer;
+    document.querySelector('.cell').innerHTML = currentPlayer
+    //getAttributeNode(m).value=currentPlayer
 
-    //m will have the computer move
+   
 }
 
 //function handleComputerMove()
