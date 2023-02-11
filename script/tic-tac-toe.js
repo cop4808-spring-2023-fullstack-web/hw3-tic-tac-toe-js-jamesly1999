@@ -22,6 +22,7 @@ const winningConditions = [
 ];
 
 function handleCellPlayed(clickedCell, clickedCellIndex) {
+    handleResultValidation();
     gameState[clickedCellIndex] = currentPlayer;
     clickedCell.innerHTML = currentPlayer;
 }
@@ -32,7 +33,9 @@ function handlePlayerChange() {
 }
 
 function checkWin(){
-    let roundWon = false;
+
+  
+      let roundWon = false;
     for (let i = 0; i <= 7; i++) {
         const winCondition = winningConditions[i];
         let a = gameState[winCondition[0]];
@@ -53,7 +56,9 @@ function checkWin(){
         statusDisplay.style.color = "rgb(251,100,204)";
         return roundWon;
     }
+  
     
+
     let roundDraw = !gameState.includes("");
     if (roundDraw) {
         statusDisplay.innerHTML = drawMessage();
@@ -61,23 +66,22 @@ function checkWin(){
         statusDisplay.style.color = "rgb(251,100,204)";
         return roundDraw;
     }
-   return false;
-  
+
+    return false;
+
 }
 
 function handleResultValidation() {
     checkWin()
-
     if(gameActive){
-    handlePlayerChange();
-    handleComputerMove();
-}    
-
+        handlePlayerChange();
+        handleComputerMove();
+    }
 }
 
 function handleComputerMove(){
     pickComputerMove()
-    if(!checkWin())
+    if(!checkWin())    
         handlePlayerChange()
     
 }
@@ -85,13 +89,13 @@ function handleComputerMove(){
 function pickComputerMove(){
     while(true){
         //loop through gameState and randomly find an available spot
-        m = Math.floor(Math.random() *8)
+       var m = Math.floor(Math.random()*8)
         if(gameState[m]=='')//looking for empty spot
             break;
     }
      //m will have the computer move
     gameState[m]=currentPlayer;
-    document.querySelector('.cell').innerHTML = currentPlayer
+    document.getElementById(m).innerHTML = currentPlayer;
     //getAttributeNode(m).value=currentPlayer
 
    
@@ -104,10 +108,12 @@ function handleCellClick(clickedCellEvent) {
     const clickedCell = clickedCellEvent.target;
     const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
 
+    //Check to se  id current cell is an available cell and game is active
     if (gameState[clickedCellIndex] !== "" || !gameActive) {
         return;
     }
 
+    //This handles the updating of the board of who played
     handleCellPlayed(clickedCell, clickedCellIndex);
     handleResultValidation();
 }
