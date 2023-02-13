@@ -34,7 +34,9 @@ function handlePlayerChange() {
 
 function checkWin(){
 
-  
+       var one;
+       var two;
+       var three;
       let roundWon = false;
     for (let i = 0; i <= 7; i++) {
         const winCondition = winningConditions[i];
@@ -44,14 +46,20 @@ function checkWin(){
         if (a === '' || b === '' || c === '') {
             continue;
         }
-        if (a === b && b === c) {
-            roundWon = true;
+        if (a === b && b === c) {          
+            one = a;
+            two = b;
+            three = c;
+            roundWon = true;          
             break;
         }
     }
 
     if (roundWon) {
-        statusDisplay.innerHTML = winningMessage(); `<span class="text-success">${winningMessage()}</span>`
+        statusDisplay.innerHTML = `<span class="text-success">${winningMessage()}</span>`;
+        document.getElementById(`${one}`).style.backgroundColor = "blue";
+        document.getElementById(`${two}`).style.backgroundColor = "blue";
+        document.getElementById(`${three}`).style.backgroundColor = "blue";
         gameActive = false;
         statusDisplay.style.color = "rgb(251,100,204)";
         return roundWon;
@@ -67,12 +75,11 @@ function checkWin(){
         return roundDraw;
     }
 
-    return false;
-
+return false;
 }
 
 function handleResultValidation() {
-    checkWin()
+    checkWin();
     if(gameActive){
         handlePlayerChange();
         handleComputerMove();
@@ -80,9 +87,11 @@ function handleResultValidation() {
 }
 
 function handleComputerMove(){
-    pickComputerMove()
-    if(!checkWin())    
-        handlePlayerChange()
+    pickComputerMove();
+    if(!checkWin())    {
+        handlePlayerChange();
+    }
+        
     
 }
 
