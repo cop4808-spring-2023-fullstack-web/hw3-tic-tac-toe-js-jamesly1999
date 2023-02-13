@@ -46,12 +46,12 @@ function checkWin(){
         }
         if (a === b && b === c) {
             roundWon = true;
-            break
+            break;
         }
     }
 
     if (roundWon) {
-        statusDisplay.innerHTML = winningMessage();
+        statusDisplay.innerHTML = winningMessage(); `<span class="text-success">${winningMessage()}</span>`
         gameActive = false;
         statusDisplay.style.color = "rgb(251,100,204)";
         return roundWon;
@@ -61,7 +61,7 @@ function checkWin(){
 
     let roundDraw = !gameState.includes("");
     if (roundDraw) {
-        statusDisplay.innerHTML = drawMessage();
+        statusDisplay.innerHTML =  `<span class="text-warning">${drawMessage()}</span>`;
         gameActive = false;
         statusDisplay.style.color = "rgb(251,100,204)";
         return roundDraw;
@@ -109,7 +109,7 @@ function handleCellClick(clickedCellEvent) {
     const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
 
     //Check to se  id current cell is an available cell and game is active
-    if (gameState[clickedCellIndex] !== "" || !gameActive) {
+    if (gameState[clickedCellIndex] !=="" || !gameActive) {
         return;
     }
 
